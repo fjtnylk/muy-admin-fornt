@@ -1,0 +1,26 @@
+.editableCell {
+  position: relative;
+}
+
+.editableCellIcon,
+.editableCellIconCheck {
+  cursor: pointer;
+}
+
+.editableCellIcon {
+  line-height: 14px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  margin-top: -7px;
+  display: none;
+}
+
+td:hover .editableCellIcon {
+  display: inline-block;
+}
+
+.editableCellIcon:hover,
+.editableCellIconCheck:hover {
+  color: #108ee9;
+}
