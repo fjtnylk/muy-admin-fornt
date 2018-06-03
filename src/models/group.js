@@ -1,5 +1,5 @@
 import { hashHistory } from 'dva/router';
-import { query } from "../services/groups";
+import { query, remove, save } from "../services/groups";
 import {parse} from "qs";
 
 export default {
@@ -8,17 +8,16 @@ export default {
   state: {
     list: [],
     total: null,
-    loading: false,
     current: null,
-    currentItem: {},
+    pageSize: null,
+    loading: false,
     modalVisible: false,
-    modalType: 'create',
   },
 
   subscriptions: {
     setup({ dispatch, history}) {
       history.listen(location => {
-        if (location.pathname === '/group') {
+        if (location.pathname === '/groups') {
           dispatch({
             type: 'query',
             payload: {}
@@ -38,19 +37,33 @@ export default {
           payload: {
             list: result.list,
             total: result.total,
-            current: result.current
+            current: result.current,
+            pageSize: result.size,
           }
         })
       }
     },
 
-    * create() {
+    * create({payload}, {select, call, put}) {
+      yield put({type: 'showModal'})
     },
 
-    * remove() {
+    * remove({ payload }, { select, call, put }) {
+      const { success } = yield call(remove, payload)
+      if (success) {
+        yield put({
+          type: 'query',
+          payload: {}
+        })
+      }
     },
 
-    * update() {
+    * save({payload}, {select, call, put}) {
+      const { success } = yield call(save, payload)
+      if (success) {
+        yield put({type: 'onCellChange', payload: payload})
+        yield put({type: 'hideModal'})
+      }
     },
   },
 
@@ -58,18 +71,20 @@ export default {
     showLoading(state, action) {
       return {...state, loading: true}
     },
-    showModal() {
+    hideLoading(state, action) {
+      return {...state, loading: false}
     },
-    hideModal() {
+    showModal(state, action) {
+      return {...state, modalVisible: true, loading: false}
+    },
+    hideModal(state, action) {
+      return {...state, modalVisible: false, loading: false}
     },
     querySuccess(state, action) {
       return {...state, ...action.payload, loading: false};
     },
-    createSuccess() {
-    },
-    removeSuccess() {
-    },
-    updateSuccess() {
+    onCellChange(state, action) {
+      return {...state, loading: false};
     },
   },
 }

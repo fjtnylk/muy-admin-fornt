@@ -9,27 +9,19 @@ import { connect } from 'dva'
 const Roles = ({
   location, dispatch, roles
 }) => {
-  const {loading, list, total, current, currentCell, modalVisible, pageSize} = roles
+  const {loading, list, total, current, modalVisible, pageSize} = roles
 
   const roleListProps = {
     total,
     current,
     pageSize,
     loading,
-    currentCell,
     dataSource: list,
-  }
-
-  const handleRefresh = (payload) => {
-    dispatch({
-      type: `roles/query`,
-      payload: payload
-    })
   }
 
   const roleModalProps = {
     visible: modalVisible,
-    title: `创建组织`,
+    title: `创建角色`,
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
@@ -44,6 +36,13 @@ const Roles = ({
         type: 'roles/hideModal',
       })
     },
+  }
+
+  const handleRefresh = (payload) => {
+    dispatch({
+      type: `roles/query`,
+      payload: payload
+    })
   }
 
   const handlePageChange = (page, pageSize) => {
@@ -79,7 +78,8 @@ const Roles = ({
       <RoleList {...roleListProps}
                 handleCellChange={handleCellChange}
                 handleDeleteItem={handleDelete}
-                handlePageChange={handlePageChange} handleShowSizeChange={handlePageChange}  />
+                handlePageChange={handlePageChange}
+                handleShowSizeChange={handlePageChange}  />
       {modalVisible && <RoleModal {...roleModalProps} />}
     </div>
   )

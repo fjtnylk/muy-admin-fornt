@@ -1,6 +1,5 @@
 import { hashHistory } from 'dva/router';
 import {query, save, remove} from "../services/roles";
-import {parse} from "qs";
 
 export default {
   namespace: 'roles',
@@ -30,7 +29,7 @@ export default {
   effects: {
     * query({payload}, {select, call, put}) {
       yield put({type: 'showLoading'})
-      const {success, result} = yield call(query, parse(payload));
+      const {success, result} = yield call(query, payload);
       if (success) {
         yield put({
           type: 'querySuccess',
@@ -38,7 +37,7 @@ export default {
             list: result.list,
             total: result.total,
             current: result.current,
-            pageSize: result.page_size,
+            pageSize: result.size,
           }
         })
       }

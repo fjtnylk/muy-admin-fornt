@@ -65,7 +65,7 @@ const Routers = function ({ history, app }) {
       models: () => [import('./models/post')],
       component: () => import('./routes/post/'),
     }, {
-      path: '/group',
+      path: '/groups',
       models: () => [import('./models/group')],
       component: () => import('./routes/group/'),
     }, {

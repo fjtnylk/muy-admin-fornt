@@ -1,7 +1,7 @@
 import { request, config } from 'utils'
 
 const { api } = config
-const { groups } = api
+const { groups, saveGroups, deleteGroups } = api
 
 export function query(params) {
   return request({
@@ -9,5 +9,21 @@ export function query(params) {
     method: 'get',
     data: params
   });
+}
+
+export function save(params) {
+  return request({
+    url: saveGroups,
+    method: 'post',
+    data: params
+  })
+}
+
+export function remove(params) {
+  return request({
+    url: deleteGroups,
+    method: 'post',
+    data: params
+  })
 }
 
