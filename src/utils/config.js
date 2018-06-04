@@ -5,7 +5,7 @@ const ADMINV1 = '/admin'
 module.exports = {
   name: '',
   prefix: 'antdAdmin',
-  footerText: 'Muy Admin  © 2018 yanglikai',
+  footerText: 'MUY Admin  © 2018 yanglikai',
   logo: '/logo.png',
   iconFontCSS: '/iconfont.css',
   iconFontJS: '/iconfont.js',
