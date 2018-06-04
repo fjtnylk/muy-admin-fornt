@@ -3,10 +3,10 @@ const APIV2 = '/api/v2'
 const ADMINV1 = '/admin'
 
 module.exports = {
-  name: 'AntD Admin',
+  name: '',
   prefix: 'antdAdmin',
-  footerText: 'Ant Design Admin  © 2017 zuiidea',
-  logo: '/logo.svg',
+  footerText: 'Muy Admin  © 2018 yanglikai',
+  logo: '/logo.png',
   iconFontCSS: '/iconfont.css',
   iconFontJS: '/iconfont.js',
   CORS: [],
@@ -19,16 +19,24 @@ module.exports = {
     userLogout: `${APIV1}/user/logout`,
     userInfo: `${APIV1}/userInfo`,
     users: `${APIV1}/users`,
+
     groups: `${APIV1}/groups`,
     saveGroups: `${APIV1}/groups/save`,
     deleteGroups: `${APIV1}/groups/delete`,
+
     roles: `${APIV1}/roles`,
     saveRoles: `${APIV1}/roles/save`,
     deleteRoles: `${APIV1}/roles/delete`,
+
+    allMenus: `${APIV1}/menus/all`,
+    menus: `${APIV1}/menus`,
+    saveMenus: `${APIV1}/menus/save`,
+    deleteMenus: `${APIV1}/menus/delete`,
+
     posts: `${APIV1}/posts`,
     user: `${APIV1}/user/:id`,
     dashboard: `${APIV1}/dashboard`,
-    menus: `${APIV1}/menus`,
+    // menus: `${APIV1}/menus`,
     weather: `${APIV1}/weather`,
     v1test: `${APIV1}/test`,
     v2test: `${APIV2}/test`,

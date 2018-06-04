@@ -25,8 +25,10 @@ class EditableCell extends React.Component {
     this.setState({ editable: true });
   }
 
-  desc = () => {
-    this.setState({ editable: false });
+  desc = (e) => {
+    if (e.keyCode === 27) {
+      this.setState({ editable: false });
+    }
   }
 
   render() {
@@ -40,8 +42,7 @@ class EditableCell extends React.Component {
               value={value}
               onChange={this.handleChange}
               onPressEnter={this.check}
-              // onKeyDown={this.desc}
-              maxLength={32}
+              onKeyDown={this.desc}
               suffix={
                 <Icon
                   type="check"
@@ -52,7 +53,7 @@ class EditableCell extends React.Component {
             />
           ) : (
             <div style={{ paddingRight: 24 }}>
-              {value || ' '}
+              {value}
               <Icon
                 type="edit"
                 className={styles.editableCellIcon}

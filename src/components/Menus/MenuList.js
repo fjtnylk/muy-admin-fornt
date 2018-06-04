@@ -1,18 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Table, Popconfirm} from 'antd'
+import { Table, Popconfirm } from 'antd'
 import EditableCell from '../DataTable/EditableCell'
 
-
-const GroupList = ({
-total, current, pageSize, loading, dataSource, handleCellChange, handleDeleteItem, handlePageChange, handleShowSizeChange
+const MenuList = ({
+  total, current, pageSize, loading, dataSource, handleCellChange, handleDeleteItem, handlePageChange, handleShowSizeChange
 }) => {
 
   const onCellChange = (item, index) => {
     return (value) => {
       item[index] = value
       handleCellChange(item)
-    };
+    }
   }
 
   const onDeleteItem = (code) => {
@@ -22,9 +21,30 @@ total, current, pageSize, loading, dataSource, handleCellChange, handleDeleteIte
   }
 
   const columns = [{
-    title: '编码',
-    dataIndex: 'code',
-    key: 'code',
+    title: '编号',
+    dataIndex: 'id',
+    key: 'id',
+  }, {
+    title: 'BPID',
+    dataIndex: 'bpid',
+    key: 'bpid',
+    render: (text, record) => (
+      <EditableCell value={text} onChange={onCellChange(record, 'bpid')} />
+    ),
+  }, {
+    title: 'MPID',
+    dataIndex: 'mpid',
+    key: 'mpid',
+    render: (text, record) => (
+      <EditableCell value={text} onChange={onCellChange(record, 'mpid')} />
+    ),
+  }, {
+    title: '图标',
+    dataIndex: 'icon',
+    key: 'icon',
+    render: (text, record) => (
+      <EditableCell value={text} onChange={onCellChange(record, 'icon')} />
+    ),
   }, {
     title: '名称',
     dataIndex: 'name',
@@ -33,18 +53,18 @@ total, current, pageSize, loading, dataSource, handleCellChange, handleDeleteIte
       <EditableCell value={text} onChange={onCellChange(record, 'name')} />
     ),
   }, {
-    title: '备注',
-    dataIndex: 'remark',
-    key: 'remark',
+    title: '请求URL',
+    dataIndex: 'route',
+    key: 'route',
     render: (text, record) => (
-      <EditableCell value={text} onChange={onCellChange(record, 'remark')} />
+      <EditableCell value={text} onChange={onCellChange(record, 'route')} />
     ),
   }, {
     title: '操作',
     key: 'operation',
     render: (text, record) => (
       <p>
-        <Popconfirm title="确定要删除吗？" onConfirm={onDeleteItem(record.code)}>
+        <Popconfirm title="确定要删除吗？" onConfirm={onDeleteItem(record.id)}>
           <a>删除</a>
         </Popconfirm>
       </p>
@@ -54,7 +74,7 @@ total, current, pageSize, loading, dataSource, handleCellChange, handleDeleteIte
   const pagination = {
     total,
     current,
-    pageSize: pageSize,
+    pageSize,
     showSizeChanger: true,
     onChange: (page, size) => {
       handlePageChange(page, size)
@@ -71,14 +91,14 @@ total, current, pageSize, loading, dataSource, handleCellChange, handleDeleteIte
         columns={columns}
         dataSource={dataSource}
         loading={loading}
-        rowKey={record => record.code}
+        rowKey={record => record.id}
         pagination={pagination}
       />
     </div>
   )
 }
 
-GroupList.propTypes = {
+MenuList.propTypes = {
   total: PropTypes.number,
   current: PropTypes.number,
   pageSize: PropTypes.number,
@@ -90,4 +110,4 @@ GroupList.propTypes = {
   handleShowSizeChange: PropTypes.func,
 }
 
-export default GroupList
+export default MenuList

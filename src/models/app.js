@@ -71,7 +71,7 @@ export default {
       const { locationPathname } = yield select(_ => _.app)
       const user = result;
       if (success && user) {
-        const { result } = yield call(menusService.query)
+        const { result } = yield call(menusService.queryAll)
         const { permissions } = user
         const list = result;
         let menu = list
