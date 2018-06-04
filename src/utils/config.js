@@ -23,6 +23,8 @@ module.exports = {
     groups: `${APIV1}/groups`,
     saveGroups: `${APIV1}/groups/save`,
     deleteGroups: `${APIV1}/groups/delete`,
+    bindRole: `${APIV1}/groups/bind/role`,
+    saveGroupRole: `${APIV1}/groups/role/save`,
 
     roles: `${APIV1}/roles`,
     saveRoles: `${APIV1}/roles/save`,

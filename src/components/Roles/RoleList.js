@@ -43,6 +43,13 @@ const RoleList = ({
     key: 'operation',
     render: (text, record) => (
       <p>
+        <a
+          href="javascript:;"
+          onClick={() => {}}
+          style={{ marginRight: 12 }}
+        >
+          菜单权限
+        </a>
         <Popconfirm title="确定要删除吗？" onConfirm={onDeleteItem(record.code)}>
           <a>删除</a>
         </Popconfirm>

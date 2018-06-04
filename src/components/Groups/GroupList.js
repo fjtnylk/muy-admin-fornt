@@ -5,7 +5,7 @@ import EditableCell from '../DataTable/EditableCell'
 
 
 const GroupList = ({
-total, current, pageSize, loading, dataSource, handleCellChange, handleDeleteItem, handlePageChange, handleShowSizeChange
+total, current, pageSize, loading, dataSource, handleCellChange, handleDeleteItem, handlePageChange, handleShowSizeChange, handleBindRole
 }) => {
 
   const onCellChange = (item, index) => {
@@ -18,6 +18,12 @@ total, current, pageSize, loading, dataSource, handleCellChange, handleDeleteIte
   const onDeleteItem = (code) => {
     return () => {
       handleDeleteItem(code)
+    }
+  }
+
+  const onBindRole = (code) => {
+    return () => {
+      handleBindRole(code)
     }
   }
 
@@ -44,6 +50,13 @@ total, current, pageSize, loading, dataSource, handleCellChange, handleDeleteIte
     key: 'operation',
     render: (text, record) => (
       <p>
+        <a
+          href="javascript:;"
+          onClick={onBindRole(record.code)}
+          style={{ marginRight: 12 }}
+        >
+          所属角色
+        </a>
         <Popconfirm title="确定要删除吗？" onConfirm={onDeleteItem(record.code)}>
           <a>删除</a>
         </Popconfirm>
@@ -88,6 +101,7 @@ GroupList.propTypes = {
   handleDeleteItem: PropTypes.func,
   handlePageChange: PropTypes.func,
   handleShowSizeChange: PropTypes.func,
+  handleBindRole: PropTypes.func,
 }
 
 export default GroupList

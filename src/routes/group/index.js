@@ -2,12 +2,13 @@ import React from 'react'
 import { Button } from 'antd';
 import GroupList from 'components/Groups/GroupList'
 import GroupModal from 'components/Groups/GroupModal'
+import GroupTransfer from 'components/Groups/GroupTransfer'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
 
 function Groups({ location, dispatch, groups }) {
 
-  const { loading, list, total, current, modalVisible, pageSize } = groups;
+  const { loading, list, total, current, modalVisible, transferVisible, pageSize, transferList, targetKeys, selectedKeys} = groups;
 
   const groupListProps = {
     total,
@@ -19,7 +20,7 @@ function Groups({ location, dispatch, groups }) {
 
   const groupModalProps = {
     visible: modalVisible,
-    title: `创建组织`,
+    title: '创建组织',
     wrapClassName: 'vertical-center-modal',
     onOk (data) {
       dispatch({
@@ -34,7 +35,33 @@ function Groups({ location, dispatch, groups }) {
         type: 'groups/hideModal',
       })
     },
-  };
+  }
+
+  const groupTransferProps = {
+    dataSource: transferList,
+    titles: ['未属角色', '已属角色'],
+    targetKeys: targetKeys,
+    selectedKeys: selectedKeys,
+    handleChange(nextTargetKeys, direction, moveKeys) {
+      dispatch({
+        type: `groups/nextTargetKeys`,
+        payload: nextTargetKeys
+      })
+    },
+    transferVisible: transferVisible,
+    title: `所属角色`,
+    wrapClassName: 'vertical-center-modal',
+    onOk () {
+      dispatch({
+        type: `groups/saveGroupRole`,
+      })
+    },
+    onCancel () {
+      dispatch({
+        type: 'groups/hideTransferModal',
+      })
+    },
+  }
 
   const handleRefresh = (payload) => {
     dispatch({
@@ -61,6 +88,13 @@ function Groups({ location, dispatch, groups }) {
     })
   }
 
+  const handleBindRole = (code) => {
+    dispatch({
+      type: 'groups/bindRole',
+      payload: {groupCode: code}
+    })
+  }
+
   const handleAdd = () => {
     dispatch({
       type: 'groups/showModal',
@@ -78,8 +112,10 @@ function Groups({ location, dispatch, groups }) {
         handleCellChange={handleCellChange}
         handleDeleteItem={handleDelete}
         handlePageChange={handlePageChange}
-        handleShowSizeChange={handlePageChange} />
+        handleShowSizeChange={handlePageChange}
+        handleBindRole={handleBindRole} />
       {modalVisible && <GroupModal {...groupModalProps} />}
+      {transferVisible && <GroupTransfer {...groupTransferProps} />}
     </div>
   );
 }
