@@ -4,7 +4,7 @@ import {Table, Popconfirm} from 'antd'
 import EditableCell from '../DataTable/EditableCell'
 
 const RoleList = ({
-  total, current, pageSize, loading, dataSource, handleCellChange, handleDeleteItem, handlePageChange, handleShowSizeChange
+  total, current, pageSize, loading, dataSource, handleCellChange, handleDeleteItem, handlePageChange, handleShowSizeChange, handleBindMenu
 }) => {
 
   const onCellChange = (item, index) => {
@@ -17,6 +17,12 @@ const RoleList = ({
   const onDeleteItem = (code) => {
     return () => {
       handleDeleteItem(code)
+    }
+  }
+
+  const onBindMenu = (code) => {
+    return () => {
+      handleBindMenu(code)
     }
   }
 
@@ -45,10 +51,10 @@ const RoleList = ({
       <p>
         <a
           href="javascript:;"
-          onClick={() => {}}
+          onClick={onBindMenu(record.code)}
           style={{ marginRight: 12 }}
         >
-          菜单权限
+          菜单授权
         </a>
         <Popconfirm title="确定要删除吗？" onConfirm={onDeleteItem(record.code)}>
           <a>删除</a>
@@ -94,6 +100,7 @@ RoleList.propTypes = {
   handleDeleteItem: PropTypes.func,
   handlePageChange: PropTypes.func,
   handleShowSizeChange: PropTypes.func,
+  handleBindMenu: PropTypes.func,
 }
 
 export default RoleList

@@ -29,6 +29,8 @@ module.exports = {
     roles: `${APIV1}/roles`,
     saveRoles: `${APIV1}/roles/save`,
     deleteRoles: `${APIV1}/roles/delete`,
+    bindMenu: `${APIV1}/roles/bind/menu`,
+    saveRoleMenu: `${APIV1}/roles/menu/save`,
 
     allMenus: `${APIV1}/menus/all`,
     menus: `${APIV1}/menus`,
