@@ -1,6 +1,5 @@
 import { hashHistory } from 'dva/router';
 import {query, save, remove, bind, bindRoleMenu} from "../services/roles";
-import {bindGroupRole} from "../services/groups";
 
 export default {
   namespace: 'roles',
