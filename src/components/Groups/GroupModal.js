@@ -37,6 +37,8 @@ const GroupModal = ({
 
   const modalOpts = {
     ...modalProps,
+    okText: '确定',
+    cancelText: '取消',
     onOk: handleOk,
   }
 

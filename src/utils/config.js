@@ -18,6 +18,8 @@ module.exports = {
     userLogin: `${APIV1}/user/login`,
     userLogout: `${APIV1}/user/logout`,
     userInfo: `${APIV1}/userInfo`,
+
+
     users: `${APIV1}/users`,
 
     groups: `${APIV1}/groups`,

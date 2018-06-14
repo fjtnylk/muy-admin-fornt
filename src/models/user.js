@@ -10,20 +10,17 @@ const { query } = usersService
 const { prefix } = config
 
 export default modelExtend(pageModel, {
-  namespace: 'user',
+  namespace: 'users',
 
   state: {
-    currentItem: {},
     modalVisible: false,
-    modalType: 'create',
     selectedRowKeys: [],
-    isMotion: window.localStorage.getItem(`${prefix}userIsMotion`) === 'true',
   },
 
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen((location) => {
-        if (location.pathname === '/user') {
+        if (location.pathname === '/users') {
           const payload = queryString.parse(location.search) || { page: 1, pageSize: 10 }
           dispatch({
             type: 'query',
@@ -37,16 +34,17 @@ export default modelExtend(pageModel, {
   effects: {
 
     * query ({ payload = {} }, { call, put }) {
-      const data = yield call(query, payload)
-      if (data) {
+      const { success, result } = yield call(query, payload)
+
+      if (success) {
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.data,
+            list: result.list,
             pagination: {
-              current: Number(payload.page) || 1,
-              pageSize: Number(payload.pageSize) || 10,
-              total: data.total,
+              current: Number(result.current) || 1,
+              pageSize: Number(result.size) || 10,
+              total: result.total,
             },
           },
         })
@@ -102,11 +100,6 @@ export default modelExtend(pageModel, {
 
     hideModal (state) {
       return { ...state, modalVisible: false }
-    },
-
-    switchIsMotion (state) {
-      window.localStorage.setItem(`${prefix}userIsMotion`, !state.isMotion)
-      return { ...state, isMotion: !state.isMotion }
     },
 
   },

@@ -76,6 +76,10 @@ const Routers = function ({ history, app }) {
       path: '/menus',
       models: () => [import('./models/menu')],
       component: () => import('./routes/menu/'),
+    }, {
+      path: '/users',
+      models: () => [import('./models/user')],
+      component: () => import('./routes/user/'),
     },
   ]
 

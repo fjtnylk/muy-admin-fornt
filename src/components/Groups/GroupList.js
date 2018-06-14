@@ -1,30 +1,33 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Table, Popconfirm} from 'antd'
+import {Table, Modal} from 'antd'
+import { DropOption } from 'components'
 import EditableCell from '../DataTable/EditableCell'
 
+const { confirm } = Modal
 
 const GroupList = ({
 total, current, pageSize, loading, dataSource, handleCellChange, handleDeleteItem, handlePageChange, handleShowSizeChange, handleBindRole
 }) => {
+
+  const handleMenuClick = (record, e) => {
+    if (e.key === '1') {
+      handleBindRole(record.code)
+    } else if (e.key === '2') {
+      confirm({
+        title: '确定删除?',
+        onOk () {
+          handleDeleteItem(record.code)
+        },
+      })
+    }
+  }
 
   const onCellChange = (item, index) => {
     return (value) => {
       item[index] = value
       handleCellChange(item)
     };
-  }
-
-  const onDeleteItem = (code) => {
-    return () => {
-      handleDeleteItem(code)
-    }
-  }
-
-  const onBindRole = (code) => {
-    return () => {
-      handleBindRole(code)
-    }
   }
 
   const columns = [{
@@ -48,20 +51,9 @@ total, current, pageSize, loading, dataSource, handleCellChange, handleDeleteIte
   }, {
     title: '操作',
     key: 'operation',
-    render: (text, record) => (
-      <p>
-        <a
-          href="javascript:;"
-          onClick={onBindRole(record.code)}
-          style={{ marginRight: 12 }}
-        >
-          所属角色
-        </a>
-        <Popconfirm title="确定要删除吗？" onConfirm={onDeleteItem(record.code)}>
-          <a>删除</a>
-        </Popconfirm>
-      </p>
-    ),
+    render: (text, record) => {
+      return <DropOption onMenuClick={e => handleMenuClick(record, e)} menuOptions={[{ key: '1', name: '所属角色'}, { key: '2', name: '删除'}]} />
+    },
   }]
 
   const pagination = {

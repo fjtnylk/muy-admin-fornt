@@ -73,7 +73,7 @@ const Menus = ({
   return (
     <div>
       <Button onClick={handleAdd} type="primary" style={{ marginBottom: 16 }}>
-        新增
+        新建
       </Button>
       <MenuList {...menuListProps}
                 handleCellChange={handleCellChange}
