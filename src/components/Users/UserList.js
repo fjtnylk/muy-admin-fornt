@@ -14,6 +14,8 @@ const UserList = ({
     if (e.key === '1') {
       confirm({
         title: '确定删除用户?',
+        okText: '确定',
+        cancelText: '取消',
         onOk () {
           onDeleteUser(record.id)
         },

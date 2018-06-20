@@ -35,6 +35,14 @@ const pageModel = modelExtend(model, {
           ...state.pagination,
           ...pagination,
         },
+        loading: false
+      }
+    },
+    success (state, { payload }) {
+      return {
+        ...state,
+        ...payload,
+        loading: false
       }
     },
   },

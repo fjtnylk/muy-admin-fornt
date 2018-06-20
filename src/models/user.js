@@ -2,11 +2,10 @@
 import modelExtend from 'dva-model-extend'
 import queryString from 'query-string'
 import { config } from 'utils'
-import { create, remove, update } from 'services/user'
 import * as usersService from 'services/users'
 import { pageModel } from './common'
 
-const { query } = usersService
+const { query, queryCitys, queryPosition, save, remove } = usersService
 const { prefix } = config
 
 export default modelExtend(pageModel, {
@@ -14,7 +13,9 @@ export default modelExtend(pageModel, {
 
   state: {
     modalVisible: false,
-    selectedRowKeys: [],
+    city: [],
+    position: [],
+    loading: false,
   },
 
   subscriptions: {
@@ -34,6 +35,8 @@ export default modelExtend(pageModel, {
   effects: {
 
     * query ({ payload = {} }, { call, put }) {
+      yield put({type: 'showLoading'})
+
       const { success, result } = yield call(query, payload)
 
       if (success) {
@@ -51,28 +54,49 @@ export default modelExtend(pageModel, {
       }
     },
 
+    * queryCitys ({ payload = {} }, { call, put }) {
+      const { success, result } = yield call(queryCitys, payload)
+
+      if (success) {
+        yield put({
+          type: 'success',
+          payload: {
+            city: result,
+          },
+        })
+      }
+    },
+
+    * queryPosition ({ payload = {} }, { call, put }) {
+      const { success, result } = yield call(queryPosition, payload)
+
+      if (success) {
+        yield put({
+          type: 'success',
+          payload: {
+            position: result,
+          },
+        })
+      }
+    },
+
     * delete ({ payload }, { call, put, select }) {
-      const data = yield call(remove, { id: payload })
-      const { selectedRowKeys } = yield select(_ => _.user)
-      if (data.success) {
-        yield put({ type: 'updateState', payload: { selectedRowKeys: selectedRowKeys.filter(_ => _ !== payload) } })
+      yield put({type: 'showLoading'})
+
+      const { success } = yield call(remove, payload)
+      if (success) {
+        yield put({
+          type: 'success',
+          payload: {},
+        })
       } else {
         throw data
       }
     },
 
-    * multiDelete ({ payload }, { call, put }) {
-      const data = yield call(usersService.remove, payload)
-      if (data.success) {
-        yield put({ type: 'updateState', payload: { selectedRowKeys: [] } })
-      } else {
-        throw data
-      }
-    },
-
-    * create ({ payload }, { call, put }) {
-      const data = yield call(create, payload)
-      if (data.success) {
+    * save ({ payload }, { call, put }) {
+      const { success } = yield call(save, payload)
+      if (success) {
         yield put({ type: 'hideModal' })
       } else {
         throw data
@@ -93,13 +117,16 @@ export default modelExtend(pageModel, {
   },
 
   reducers: {
+    showLoading(state, { payload }) {
+      return {...state, loading: true}
+    },
 
     showModal (state, { payload }) {
-      return { ...state, ...payload, modalVisible: true }
+      return { ...state, ...payload, modalVisible: true, loading: false }
     },
 
     hideModal (state) {
-      return { ...state, modalVisible: false }
+      return { ...state, modalVisible: false, loading: false }
     },
 
   },

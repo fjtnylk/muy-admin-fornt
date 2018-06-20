@@ -23,7 +23,6 @@ const TwoColProps = {
 const UserSearch = ({
   onAdd,
   onSearch,
-  searchValues,
   form: {
     getFieldDecorator,
     getFieldsValue,
@@ -32,16 +31,22 @@ const UserSearch = ({
 }) => {
 
   const handleFields = (fields) => {
-    // const { createTime } = fields
-    // if (createTime.length) {
-    //   fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
-    // }
+    const { createTime } = fields
+    if (createTime === undefined) {
+      return fields;
+    }
+
+    if (createTime.length) {
+      fields.createTime = [createTime[0].format('YYYY-MM-DD'), createTime[1].format('YYYY-MM-DD')]
+    }
+
     return fields
   }
 
   const handleSearch = () => {
     let fields = getFieldsValue()
     fields = handleFields(fields)
+
     onSearch(fields)
   }
 
@@ -61,33 +66,15 @@ const UserSearch = ({
     handleSearch()
   }
 
-  const handleChange = (key, values) => {
-    let fields = getFieldsValue()
-    fields[key] = values
-    fields = handleFields(fields)
-    onSearch(fields)
-  }
-
-  const { name } = searchValues
-
-  let initialCreateTime = []
-  if (searchValues.createTime && searchValues.createTime[0]) {
-    initialCreateTime[0] = moment(searchValues.createTime[0])
-  }
-  if (searchValues.createTime && searchValues.createTime[1]) {
-    initialCreateTime[1] = moment(searchValues.createTime[1])
-  }
-
   return (
     <Row gutter={24}>
       <Col {...ColProps} xl={{ span: 5 }} md={{ span: 8 }}>
-        {getFieldDecorator('name', { initialValue: name })(<Search placeholder="Search Name" onSearch={handleSearch()} />)}
+        {getFieldDecorator('name')(<Search placeholder="Search Name" />)}
       </Col>
       <Col {...ColProps} xl={{ span: 7 }} md={{ span: 8 }} sm={{ span: 12 }} id="createTimeRangePicker">
         <FilterItem label="创建时间">
-          {getFieldDecorator('createTime', { initialValue: initialCreateTime })(<RangePicker
+          {getFieldDecorator('createTime')(<RangePicker
             style={{ width: '100%' }}
-            onChange={handleChange.bind(null, 'createTime')}
             getCalendarContainer={() => {
               return document.getElementById('createTimeRangePicker')
             }}
@@ -97,7 +84,7 @@ const UserSearch = ({
       <Col {...TwoColProps} xl={{ span: 12 }} md={{ span: 24 }} sm={{ span: 24 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
           <div>
-            <Button type="primary" className="margin-right" onClick={handleSearch()}>检索</Button>
+            <Button type="primary" className="margin-right" onClick={handleSearch}>检索</Button>
             <Button onClick={handleReset}>重置</Button>
           </div>
           <div className="flex-vertical-center">
@@ -112,7 +99,6 @@ const UserSearch = ({
 UserSearch.propTypes = {
   onAdd: PropTypes.func,
   onSearch: PropTypes.func,
-  searchValues: PropTypes.object,
 }
 
 export default Form.create()(UserSearch)

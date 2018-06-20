@@ -21,6 +21,10 @@ module.exports = {
 
 
     users: `${APIV1}/users`,
+    saveUser: `${APIV1}/users/save`,
+    deleteUser: `${APIV1}/users/delete`,
+    citys: `${APIV1}/citys`,
+    positions: `${APIV1}/groups/roles`,
 
     groups: `${APIV1}/groups`,
     saveGroups: `${APIV1}/groups/save`,

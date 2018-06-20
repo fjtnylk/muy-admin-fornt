@@ -1,7 +1,6 @@
 import React from 'react'
 import { Form, Input, InputNumber, Radio, Modal, Cascader } from 'antd'
 import PropTypes from 'prop-types'
-import city from '../../utils/city'
 
 const FormItem = Form.Item
 
@@ -24,6 +23,8 @@ const UserModal = ({
   ...modalProps
 }) => {
 
+  const { city, position } = modalProps
+
   const handleOk = () => {
     validateFields((errors) => {
       if (errors) {
@@ -41,26 +42,6 @@ const UserModal = ({
     cancelText: '取消',
     onOk: handleOk,
   }
-
-  const position = [{
-    value: 'G10',
-    label: '技术部',
-    children: [{
-      value: 'G11',
-      label: '前端开发',
-    }, {
-      value: 'G12',
-      label: '后端开发',
-    }]
-  }, {
-    value: 'G20',
-    label: '人事部',
-    children: [{
-      value: 'G21',
-      label: '行政人员',
-    }]
-  }]
-
 
   return (
     <Modal {...modalOpts}>
