@@ -50,7 +50,7 @@ const Header = ({
             </span>}
           >
             <Menu.Item key="logout">
-              Sign out
+              退 出
             </Menu.Item>
           </SubMenu>
         </Menu>

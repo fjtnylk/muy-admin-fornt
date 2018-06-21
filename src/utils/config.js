@@ -15,7 +15,8 @@ module.exports = {
   APIV1,
   APIV2,
   api: {
-    userLogin: `${APIV1}/user/login`,
+    // userLogin: `${APIV1}/user/login`,
+    userLogin: `${APIV2}/auth/password`,
     userLogout: `${APIV1}/user/logout`,
     userInfo: `${APIV1}/userInfo`,
 

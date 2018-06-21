@@ -51,12 +51,12 @@ const Login = ({
         </FormItem>
         <Row>
           <Button type="primary" onClick={handleOk} loading={loading.effects.login}>
-            Sign in
+            登 录
           </Button>
-          <p>
-            <span>Username：guest</span>
-            <span>Password：guest</span>
-          </p>
+          {/*<p>*/}
+            {/*<span>Username：guest</span>*/}
+            {/*<span>Password：guest</span>*/}
+          {/*</p>*/}
         </Row>
 
       </form>

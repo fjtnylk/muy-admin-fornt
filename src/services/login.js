@@ -8,5 +8,6 @@ export function login (data) {
     url: userLogin,
     method: 'post',
     data,
+    isFormSubmit: true,
   })
 }

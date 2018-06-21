@@ -10,18 +10,18 @@ export default {
     * login ({
       payload,
     }, { put, call, select }) {
-      const data = yield call(login, payload)
+      const { success, message, result } = yield call(login, payload)
       const { locationQuery } = yield select(_ => _.app)
-      if (data.success) {
+      if (success) {
         const { from } = locationQuery
-        yield put({ type: 'app/query' })
+        yield put({ type: 'app/query', payload: { userId: result.user_id }})
         if (from && from !== '/login') {
           yield put(routerRedux.push(from))
         } else {
           yield put(routerRedux.push('/dashboard'))
         }
       } else {
-        throw data
+        throw message
       }
     },
   },

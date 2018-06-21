@@ -24,6 +24,11 @@ export default {
       "changeOrigin": true,
       "pathRewrite": { "^/api/v1" : "/api/v1"}
     },
+    "/api/v2": {
+      "target": "http://127.0.0.1:9000",
+      "changeOrigin": true,
+      "pathRewrite": { "^/api/v2" : ""}
+    },
   },
   env: {
     development: {

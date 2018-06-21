@@ -13,6 +13,7 @@ const fetch = (options) => {
     data,
     fetchType,
     url,
+    isFormSubmit = false,
   } = options
 
   const cloneData = lodash.cloneDeep(data)
@@ -63,7 +64,13 @@ const fetch = (options) => {
         data: cloneData,
       })
     case 'post':
-      return axios.post(url, cloneData)
+      if (isFormSubmit === false) {
+        return axios.post(url, cloneData)
+      }
+
+      return axios.post(url, cloneData, {
+        params: cloneData,
+      })
     case 'put':
       return axios.put(url, cloneData)
     case 'patch':
